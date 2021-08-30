@@ -6,12 +6,22 @@ if (!isset($_SESSION['fullname'])) {
 include('../class/vegetable.php');
 include('../connection.php');
 $vege = new Vegetable();
-$ListVegetable = $vege->getAll($conn);
 
 $html = '';
+$ListVegetable =null;
+
+if (isset($_GET['cateId'])) {
+    $listCateID = $_GET['cateId'];
+    $tmp =   implode(",",$listCateID);
+    $ListVegetable = $vege->getListByCateIDs($conn,$tmp);
+
+}else{
+    $ListVegetable = $vege->getAll($conn);
+
+}
 foreach ($ListVegetable as $item) {
     $html .= '
-            <div class=" col-md-3 mt-4" >
+            <div class=" col-md-4 mt-4" >
                 <div class="card  ">
                     <img class="card-img-top" src="../' . $item['Image'] . '" alt="Card image cap">
                     <div class="card-body">
@@ -23,6 +33,18 @@ foreach ($ListVegetable as $item) {
         
         ';
 }
+
+include('../class/category.php');
+$cate = new Category();
+$listCategoryName = $cate->getAll($conn);
+$htmlCheckBox = '';
+foreach($listCategoryName as $item){
+    $htmlCheckBox.='<li> <input type="checkbox" name="cateId[]" id="" value="'.$item['CategoryID'].'">'.$item['Name'].'</li>';
+}
+
+
+
+
 
 
 ?>
@@ -44,11 +66,24 @@ foreach ($ListVegetable as $item) {
     include('../menu.php');
 
     ?>
-    <div class="container" style="margin-top: 20px;">
+    <div class="container" >
         <div class="row justify-content-between ">
+            <div class="sidebar col-md-2 mt-4" >
+               <form action="" method="GET">
+                   <h2>Category name</h2>
+                    <ul style="list-style: none;  padding:0;">
+                        <?php echo $htmlCheckBox; ?>
+                      
+                    </ul>
 
-            <?php echo $html; ?>
-
+                    <button type="submit" class="btn btn-info my-2 my-sm-0">Filter</button>
+               </form>
+            </div>
+            <div class=" col-md-10 mt-4" >
+                <div class="row">
+                    <?php echo $html; ?>
+                </div>
+            </div>
         </div>
     </div>
     <script>

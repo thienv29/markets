@@ -33,7 +33,7 @@ class Vegetable
     }
     function getListByCateIDs($conn, $cateids)
     {
-        $sql = "SELECT * FROM vegetable WHERE CategoryID in $cateids";
+        $sql = "SELECT * FROM vegetable WHERE CategoryID in ($cateids)";
         $old = mysqli_query($conn, $sql);
         $val = [];
         while ($row = mysqli_fetch_array($old)) {
