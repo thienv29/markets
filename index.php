@@ -1,5 +1,10 @@
 <?php
 require_once('./connection.php');
+include('./class/vegetable.php');
+
+
+
+
 
 ?>
 <!DOCTYPE html>

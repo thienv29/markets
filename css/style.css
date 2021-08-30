@@ -36,3 +36,11 @@
   transform: translate(-50%, -50%);
   min-width: 340px;
 }
+
+.priceText {
+  padding: 3px;
+  background-color: yellow;
+  color: white;
+  border-radius: 3px;
+  font-weight: 800;
+}
