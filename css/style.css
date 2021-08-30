@@ -1,3 +1,6 @@
+*{
+  box-sizing: border-box;
+}
 .linkLogout:hover {
   text-decoration: none;
   color: gray;
@@ -39,8 +42,10 @@
 
 .priceText {
   padding: 3px;
-  background-color: yellow;
+  background-color: orange;
   color: white;
   border-radius: 3px;
   font-weight: 800;
 }
+
+

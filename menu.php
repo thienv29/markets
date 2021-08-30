@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 $headerRight = '';
 $history = '';
 if (isset($_SESSION['fullname'])) {
