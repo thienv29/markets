@@ -1,0 +1,107 @@
+<?php
+require_once('../connection.php');
+session_start();
+
+if (!isset($_SESSION['listVegeId'])) {
+    $_SESSION['listVegeId']=[];
+}
+
+$html = '';
+if (!isset($_SESSION['fullname'])) {
+    $html = 'You need to login!!';
+} else {
+    if (isset($_GET['vegeId'])) {
+        
+        $object = new stdClass();
+        $object->amount = 1;
+        $object->id =$_GET['vegeId'];
+          
+        if (check($object,$_SESSION['listVegeId'])) {
+
+        } else {
+            array_push($_SESSION['listVegeId'], $object);
+        }
+    }
+
+
+    $html ='';
+    include('../class/vegetable.php');
+    $vegetable = new Vegetable();
+
+    foreach ($_SESSION['listVegeId'] as $key=> $item){
+        $vegetableItem = $vegetable->getByID($conn,$item->id);
+        
+        $name = $vegetableItem['VegetableName'];
+        $image = $vegetableItem['Image'];
+        $price = $vegetableItem['Price'];
+        $amount= $item->amount;
+
+        $html.='<tr>
+            <th scope="row">'.$key.'</th>
+            <td>'.$name.'</td>
+            <td><img src="../'.$image.'" alt="" style="width: 100px; height:100px;"></td>
+            <td>'.$amount.'</td>
+            <td>'.$price.'</td>
+        </tr>';
+    }
+
+
+}
+function check($object,$arr)
+{
+    for ($i=0; $i < count($arr); $i++) { 
+        if ($arr[$i]->id==$object->id) {
+            $arr[$i]->amount++;
+            $_SESSION['listVegeId'] = $arr;
+            return true;
+        }
+    }
+}
+
+
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/booststrap.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <?php include('../menu.php') ?>
+    <div class="container mt-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php echo $html;?>
+                
+            </tbody>
+        </table>
+        <div class="btnOrder">
+            <button class="btn ">Order</button>
+        </div>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

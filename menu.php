@@ -30,7 +30,7 @@ if (isset($_SESSION['fullname'])) {
                     <a class="nav-link" href="/markets/vegetable/index.php">Vegetable </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Cart</a>
+                    <a class="nav-link" href="/markets/cart/index.php">Cart</a>
                 </li>
                 <?php echo $history; ?>
 

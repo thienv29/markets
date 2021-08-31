@@ -16,6 +16,7 @@
             $_SESSION['id'] = $row['CustomerID'];
             $_SESSION['address'] = $row['Address'];
             $_SESSION['city'] = $row['City'];
+
             
             header('location:../vegetable/index.php');
         }else{

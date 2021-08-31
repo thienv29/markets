@@ -26,7 +26,7 @@ foreach ($ListVegetable as $item) {
                     <img class="card-img-top" src="../' . $item['Image'] . '" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">' . $item['VegetableName'] . ' <span class="priceText">' . $item['Price'] . '</span></h5>
-                        <a href="#" class="btn btn-primary">Buy</a>
+                        <a href="../cart/index.php?vegeId='. $item['VegetableID'].'" class="btn btn-primary">Buy</a>
                     </div>
                 </div>
             </div>

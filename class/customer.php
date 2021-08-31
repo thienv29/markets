@@ -20,8 +20,6 @@ class Customer {
       $sql = "INSERT INTO `customers`( `Password`, `Fullname`, `Address`, `City`)
        VALUES ('$cus->pass','$cus->fullname','$cus->address','$cus->city')";
         $old = mysqli_query($conn,$sql);
-     
-
   }
 }
 ?>
