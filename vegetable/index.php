@@ -1,45 +1,59 @@
 <?php
 session_start();
-if (!isset($_SESSION['fullname'])) {
-    header('location:../customer/login.php');
-}
+
 include('../class/vegetable.php');
 include('../connection.php');
+
+if (!isset($_SESSION['listVegeId'])) {
+    $_SESSION['listVegeId']=[];
+}
+
 $vege = new Vegetable();
 
 $html = '';
-$ListVegetable =null;
+
+$ListVegetable = null;
 
 if (isset($_GET['cateId'])) {
     $listCateID = $_GET['cateId'];
-    $tmp =   implode(",",$listCateID);
-    $ListVegetable = $vege->getListByCateIDs($conn,$tmp);
-
-}else{
+    $tmp =   implode(",", $listCateID);
+    $ListVegetable = $vege->getListByCateIDs($conn, $tmp);
+} else {
     $ListVegetable = $vege->getAll($conn);
-
 }
+
 foreach ($ListVegetable as $item) {
+    $amountCart = findAmountById($item['VegetableID']);
     $html .= '
-            <div class=" col-md-4 mt-4" >
-                <div class="card  ">
+            <div class=" col-md-4 mt-4 " >
+                <div class="card  " amount="' . $item['Amount'] . '"  amountCart="' . $amountCart . '" vegeId="' . $item['VegetableID'] . '">
                     <img class="card-img-top" src="../' . $item['Image'] . '" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">' . $item['VegetableName'] . ' <span class="priceText">' . $item['Price'] . '</span></h5>
-                        <a href="../cart/index.php?vegeId='. $item['VegetableID'].'" class="btn btn-primary">Buy</a>
+                        <button  class="btn btn-danger buyCard">Buy</button>
                     </div>
                 </div>
             </div>
         
         ';
 }
+function findAmountById($id)
+{
+    $arr = $_SESSION['listVegeId'];
+    foreach ($arr as $item) {
+        if ($item->id == $id) {
+            return $item->amount;
+        }
+    }
+    return 0;
+}
 
 include('../class/category.php');
 $cate = new Category();
 $listCategoryName = $cate->getAll($conn);
 $htmlCheckBox = '';
-foreach($listCategoryName as $item){
-    $htmlCheckBox.='<li> <input type="checkbox" name="cateId[]" id="" value="'.$item['CategoryID'].'">'.$item['Name'].'</li>';
+foreach ($listCategoryName as $item) {
+    $htmlCheckBox .= '<li> <input type="checkbox" name="cateId[]" id="" value="' . $item['CategoryID'] . '">' . $item['Name'] . '</li>';
 }
 
 
@@ -66,20 +80,20 @@ foreach($listCategoryName as $item){
     include('../menu.php');
 
     ?>
-    <div class="container" >
+    <div class="container">
         <div class="row justify-content-between ">
-            <div class="sidebar col-md-2 mt-4" >
-               <form action="" method="GET">
-                   <h2>Category name</h2>
+            <div class="sidebar col-md-2 mt-4">
+                <form action="" method="GET">
+                    <h2>Category name</h2>
                     <ul style="list-style: none;  padding:0;">
                         <?php echo $htmlCheckBox; ?>
-                      
+
                     </ul>
 
                     <button type="submit" class="btn btn-info my-2 my-sm-0">Filter</button>
-               </form>
+                </form>
             </div>
-            <div class=" col-md-10 mt-4" >
+            <div class=" col-md-10 mt-4">
                 <div class="row">
                     <?php echo $html; ?>
                 </div>
@@ -87,14 +101,29 @@ foreach($listCategoryName as $item){
         </div>
     </div>
     <script>
-            console.log('ssss');
-            const textList = Array.from(document.querySelectorAll('.priceText'));
-            textList.forEach((e) => {
-              e.innerHTML = formatNumber(e.innerHTML);
-            })
+        const textList = Array.from(document.querySelectorAll('.priceText'));
+        textList.forEach((e) => {
+            e.innerHTML = formatNumber(e.innerHTML);
+        })
+
         function formatNumber(num) { // định dạng giá tiền
             return Number(num).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
         }
+        const listCard = Array.from(document.querySelectorAll('.card'))
+
+        listCard.forEach(function(e) {
+            const btn = e.querySelector('.buyCard')
+            btn.onclick = () => {
+                const amountCart = e.getAttribute('amountCart')
+                const amount = e.getAttribute('amount')
+                const vegeId = e.getAttribute('vegeId')
+                if (amount == amountCart) {
+                    alert('Out of stock');
+                } else {
+                    window.location.href = `../cart/index.php?vegeId=${vegeId}`;
+                }
+            }
+        })
     </script>
 </body>
 

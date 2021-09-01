@@ -1,56 +1,71 @@
 <?php
 require_once('../connection.php');
+include('../class/vegetable.php');
 session_start();
-
-if (!isset($_SESSION['listVegeId'])) {
-    $_SESSION['listVegeId']=[];
-}
-
 $html = '';
+$total = 0;
+
 if (!isset($_SESSION['fullname'])) {
     $html = 'You need to login!!';
 } else {
+    $vegetable = new Vegetable();
     if (isset($_GET['vegeId'])) {
-        
+
         $object = new stdClass();
         $object->amount = 1;
-        $object->id =$_GET['vegeId'];
-          
-        if (check($object,$_SESSION['listVegeId'])) {
+        $object->id = $_GET['vegeId'];
 
+        if (check($object, $_SESSION['listVegeId'])) {
         } else {
             array_push($_SESSION['listVegeId'], $object);
         }
     }
+    $_SESSION['listVegeId']  = checkAmount($vegetable, $conn);
 
+    $html = '';
 
-    $html ='';
-    include('../class/vegetable.php');
-    $vegetable = new Vegetable();
+    foreach ($_SESSION['listVegeId'] as $key => $item) {
+        $vegetableItem = $vegetable->getByID($conn, $item->id);
 
-    foreach ($_SESSION['listVegeId'] as $key=> $item){
-        $vegetableItem = $vegetable->getByID($conn,$item->id);
-        
         $name = $vegetableItem['VegetableName'];
         $image = $vegetableItem['Image'];
         $price = $vegetableItem['Price'];
-        $amount= $item->amount;
+        $amount = $item->amount;
 
-        $html.='<tr>
-            <th scope="row">'.$key.'</th>
-            <td>'.$name.'</td>
-            <td><img src="../'.$image.'" alt="" style="width: 100px; height:100px;"></td>
-            <td>'.$amount.'</td>
-            <td>'.$price.'</td>
+        $total += $price * $amount;
+
+        $html .= '<tr>
+            <th scope="row">' . $key . '</th>
+            <td>' . $name . '</td>
+            <td><img src="../' . $image . '" alt="" style="width: 100px; height:100px;"></td>
+            <td>' . $amount . '</td>
+            <td>' . $price . '</td>
         </tr>';
     }
-
-
 }
-function check($object,$arr)
+function checkAmount($vegetable, $conn)
 {
-    for ($i=0; $i < count($arr); $i++) { 
-        if ($arr[$i]->id==$object->id) {
+    $arr = $_SESSION['listVegeId'];
+    $length = count($arr);
+
+    for ($i = 0; $i < $length; $i++) {
+        $current = $vegetable->getById($conn, $arr[$i]->id);
+        if ($arr[$i]->amount > $current['Amount']) {
+            $arr[$i]->amount -= 1;
+            if ($arr[$i]->amount == 0) {
+                unset($arr[$i]);
+            }
+
+            return $arr;
+        }
+    }
+    return $arr;
+}
+
+function check($object, $arr)
+{
+    for ($i = 0; $i < count($arr); $i++) {
+        if ($arr[$i]->id == $object->id) {
             $arr[$i]->amount++;
             $_SESSION['listVegeId'] = $arr;
             return true;
@@ -87,8 +102,15 @@ function check($object,$arr)
                 </tr>
             </thead>
             <tbody>
-                <?php echo $html;?>
-                
+                <?php echo $html; ?>
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><?php echo $total;?></td>
+                </tr>
+
             </tbody>
         </table>
         <div class="btnOrder">
@@ -97,7 +119,9 @@ function check($object,$arr)
     </div>
 
 
-
+    <script>
+        <?php echo $scriptAlert; ?>
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
