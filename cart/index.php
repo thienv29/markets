@@ -132,7 +132,7 @@ function check($object, $arr)
                     <div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Total</label>
-                            <input type="text" class="form-control" name="total" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $total; ?>"   >
+                            <input type="text" class="form-control " name="total" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $total; ?>"  readonly>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Note</label>
