@@ -34,8 +34,9 @@
     }
     if ($order->addOrder($order,$listDetails,$conn)) {
         $_SESSION['listVegeId']=[];
-        header('location:./index.php');
+        
+        header('location:./index.php?billStatus=1');
     }else{
-        echo "thanh toan that bai thng ngu";
+        header('location:./index.php?billStatus=0');
     }
     

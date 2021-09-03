@@ -47,8 +47,8 @@
   border-radius: 3px;
   font-weight: 800;
 }
-.sidebar{
-  
+.vegetable__section {
+  display: flex;
 }
 
 

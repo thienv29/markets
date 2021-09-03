@@ -8,7 +8,7 @@ if (isset($_SESSION['fullname'])) {
                     <button class="btn btn-info my-2 my-sm-0" >' . $fullname . '</button>';
 
     $history = '<li class="nav-item">
-                    <a class="nav-link" href="#">History</a>
+                    <a class="nav-link" href="/markets/cart/history.php">History</a>
                 </li>';
 } else {
     $headerRight = '<a href="/markets/customer/login.php" class="linkLogout">Login/Register</a>';

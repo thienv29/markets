@@ -6,11 +6,11 @@ class Order
     public $date;
     public $total;
     public $note;
-
+    
     function getAllOrder($cusID, $conn)
     {
-        include("../connection.php");
-        $sql = "SELECT * FROM order WHERE CustomerID = $cusID";
+
+        $sql = "SELECT * FROM `order` WHERE CustomerID = '$cusID'";
         $old = mysqli_query($conn, $sql);
         $val = [];
         while ($row = mysqli_fetch_array($old)) {
@@ -21,10 +21,7 @@ class Order
     function getOrderDetail($orderid, $conn)
     {
 
-        $sql = "SELECT order.OrderID,order.CustomerID,order.Date,order.Total,order.Note,orderdetail.VegetableID,orderdetail.Quantity,orderdetail.Price 
-            FROM orderdetail,`order` 
-            WHERE orderdetail.OrderID = order.OrderID 
-            AND order.OrderID = $orderid";
+        $sql = "SELECT * FROM `orderdetail` where orderdetail.OrderID = '$orderid'";
         $old = mysqli_query($conn, $sql);
         $val = [];
         while ($row = mysqli_fetch_array($old)) {
