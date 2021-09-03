@@ -10,11 +10,13 @@ class Customer {
 
   // Methods
   function getByID($cusid,$conn){
-      $sql = "SELECT * FROM `customers` WHERE CustomerID ='$cusid'";
+      $sql = "SELECT * FROM `customers` WHERE CustomerID =$cusid";
       $old = mysqli_query($conn,$sql);
+      if ($old==false) {
+        return null;
+      }
       $row = $old->fetch_assoc();
-      echo $row;
-
+      return $row;
   }
   function add($cus,$conn){
       $sql = "INSERT INTO `customers`( `Password`, `Fullname`, `Address`, `City`)

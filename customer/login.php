@@ -22,11 +22,11 @@
             <h3>Login</h3>
             <div class="form-group">
                 <label for="exampleDropdownFormEmail2">Your's ID</label>
-                <input type="text" name="yourId" class="form-control" id="exampleDropdownFormEmail2" placeholder="Enter Your's ID">
+                <input type="text" name="yourId" class="form-control" id="exampleDropdownFormEmail2" placeholder="Enter Your's ID" required>
             </div>
             <div class="form-group">
                 <label for="exampleDropdownFormPassword2">Password</label>
-                <input type="password" name="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
+                <input type="password" name="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password" required>
             </div>
             <div style="color: red;"><?php echo $invalidPass ?></div>
 
