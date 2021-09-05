@@ -6,9 +6,9 @@ if (!isset($_SESSION['fullname'])) {
     header('location:../customer/login.php');
 }
 $html='';
-$order = new Order();
+$order = new Order($conn);
 $listOrder=[];
-$listOrder = $order->getAllOrder($_SESSION['id'],$conn);
+$listOrder = $order->getAllOrder($_SESSION['id']);
 foreach ($listOrder as $key=>$item){
     $html.=' <tr>
     <th scope="row">' . $key+1 . '</th>
@@ -32,7 +32,7 @@ foreach ($listOrder as $key=>$item){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/booststrap.css">
     <link rel="stylesheet" href="../css/style.css">
-    <title>Document</title>
+    <title>Market online</title>
 </head>
 
 <body>

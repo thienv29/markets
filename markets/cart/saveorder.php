@@ -3,13 +3,17 @@
     include('../connection.php');
     include('../class/vegetable.php');
     include('../class/order.php');
-    $vegetable = new Vegetable();
+    $vegetable = new Vegetable($conn);
+
+    if (!isset($_SESSION['fullname'])) {
+        header('location:./index.php?errLogin');
+    }
 
     $cusId= $_SESSION['id'];
     $total = $_POST['total'];
     $note= $_POST['note'];
     
-    $order = new Order();
+    $order = new Order($conn);
     $order->cusID = $cusId;
     $order->total = $total;
     $order->note = $note;
@@ -18,7 +22,7 @@
 
     $listDetails =[];
     foreach ($_SESSION['listVegeId'] as $key => $item) {
-        $vegetableItem = $vegetable->getByID($conn, $item->id);
+        $vegetableItem = $vegetable->getByID( $item->id);
 
         $price = $vegetableItem['Price'];
         $amount = $item->amount;
@@ -32,7 +36,7 @@
         array_push($listDetails,$orderDetail);
        
     }
-    if ($order->addOrder($order,$listDetails,$conn)) {
+    if ($order->addOrder($order,$listDetails)) {
         $_SESSION['listVegeId']=[];
         
         header('location:./index.php?billStatus=1');

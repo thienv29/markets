@@ -7,16 +7,14 @@ if (isset($_SESSION['fullname'])) {
 }
 if (isset($_POST['name'])) {
     
-    $cus = new Customer();
+    $cus = new Customer($conn);
 
-    
     $cus->fullname = $_POST['name'];
     $cus->pass = $_POST['password'];
     $cus->address = $_POST['address'];
     $cus->city = $_POST['city'];
     
-    
-    $cus->add($cus,$conn);
+    $cus->add($cus);
     
     header('location:./login.php');
 }

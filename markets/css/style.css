@@ -50,6 +50,8 @@
 .vegetable__section {
   display: flex;
 }
-
+.inputFilter{
+  margin-right: 15px;
+}
 
 

@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/booststrap.css">
   <link rel="stylesheet" href="../css/style.css">
-  <title>Document</title>
+  <title>Market online</title>
 </head>
 
 <body>
@@ -38,8 +38,10 @@
 
       
 
-      <button type="submit" class="btn login-btn btn-primary">Register</button>
+      <div class=""><button type="submit" class="btn login-btn btn-primary">Register</button></div>
     </form>
+    
+    <div class="" style="width: 100%; text-align: center; padding: 15px;"><a href="../index.php" style="text-decoration: none; color: gray;" >Quay về trang chủ</a></div>
   </div>
 </body>
 

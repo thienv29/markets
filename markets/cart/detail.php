@@ -16,12 +16,12 @@
     if (isset($_GET['id'])) {
         $orderID = $_GET['id'];
         $listOrderDetail = [];
-        $order = new Order();
-        $listOrderDetail = $order->getOrderDetail($orderID, $conn);
+        $order = new Order($conn);
+        $listOrderDetail = $order->getOrderDetail($orderID);
 
         foreach ($listOrderDetail as $key => $item) {
-            $vegetable = new Vegetable();
-            $vegetableItem  = $vegetable->getByID($conn, $item['VegetableID']);
+            $vegetable = new Vegetable($conn);
+            $vegetableItem  = $vegetable->getByID( $item['VegetableID']);
 
             $html .= '
                 <tr>
@@ -53,7 +53,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/booststrap.css">
     <link rel="stylesheet" href="../css/style.css">
-    <title>Document</title>
+    <title>Market online</title>
 </head>
 
 <body>

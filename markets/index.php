@@ -17,7 +17,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/booststrap.css">
     <link rel="stylesheet" href="./css/style.css">
-    <title>Document</title>
+    <title>Market online</title>
 </head>
 
 <body>

@@ -15,9 +15,9 @@ if (isset($_GET['err'])) {
     }
 }
 
-$cate = new Category();
+$cate = new Category($conn);
 $cateName = [];
-$cateName = $cate->getAll($conn);
+$cateName = $cate->getAll();
 $html = '';
 foreach ($cateName as $key => $item) {
     $html .= '<option value="'.$item['CategoryID'].'">' . $item['Name'] . '</option>';
@@ -32,7 +32,7 @@ foreach ($cateName as $key => $item) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/booststrap.css">
     <link rel="stylesheet" href="../css/style.css">
-    <title>Document</title>
+    <title>Market online</title>
 </head>
 
 <body>

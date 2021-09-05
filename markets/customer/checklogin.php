@@ -9,8 +9,8 @@
     if (isset($_POST['yourId'])) {
         $id = $_POST['yourId'];
         $pass = $_POST['password'];
-        $cus = new Customer();
-        $row = $cus->getByID($id,$conn);
+        $cus = new Customer($conn);
+        $row = $cus->getByID($id);
         if ($row !== null ) {
            if ($row['Password']==$pass) {
             $_SESSION['fullname'] = $row['Fullname'];

@@ -4,6 +4,7 @@ include('../class/vegetable.php');
 session_start();
 $html = '';
 $total = 0;
+$totalAmount = 0;
 $scriptAlert='';
 if (isset($_GET['billStatus'])) {
     $billStatus = $_GET['billStatus'];
@@ -14,28 +15,31 @@ if (isset($_GET['billStatus'])) {
         
     }
 }
+if (isset($_GET['errLogin'])) {
+    $scriptAlert=' alert("Vui lòng đăng nhập")';
+}
 
-if (!isset($_SESSION['fullname'])) {
-    $html = 'You need to login!!';
-} else {
-    $vegetable = new Vegetable();
-    if (isset($_GET['vegeId'])) {
+// if (!isset($_SESSION['fullname'])) {
+//     $html = 'You need to login!!';
+// } else {
+    $vegetable = new Vegetable($conn);
+    if (isset($_POST['vegeId'])) {
 
         $object = new stdClass();
         $object->amount = 1;
-        $object->id = $_GET['vegeId'];
+        $object->id = $_POST['vegeId'];
 
         if (check($object, $_SESSION['listVegeId'])) {
         } else {
             array_push($_SESSION['listVegeId'], $object);
         }
     }
-    $_SESSION['listVegeId']  = checkAmount($vegetable, $conn);
+    $_SESSION['listVegeId']  = checkAmount($vegetable);
 
     $html = '';
 
     foreach ($_SESSION['listVegeId'] as $key => $item) {
-        $vegetableItem = $vegetable->getByID($conn, $item->id);
+        $vegetableItem = $vegetable->getByID($item->id);
 
         $name = $vegetableItem['VegetableName'];
         $image = $vegetableItem['Image'];
@@ -43,6 +47,7 @@ if (!isset($_SESSION['fullname'])) {
         $amount = $item->amount;
 
         $total += $price * $amount;
+        $totalAmount+=$amount;
 
         $html .= '<tr>
             <th scope="row">' . $key+1 . '</th>
@@ -52,14 +57,14 @@ if (!isset($_SESSION['fullname'])) {
             <td>' . $price . '</td>
         </tr>';
     }
-}
-function checkAmount($vegetable, $conn)
+// }
+function checkAmount($vegetable)
 {
     $arr = $_SESSION['listVegeId'];
     $length = count($arr);
 
     for ($i = 0; $i < $length; $i++) {
-        $current = $vegetable->getById($conn, $arr[$i]->id);
+        $current = $vegetable->getById($arr[$i]->id);
         if ($arr[$i]->amount > $current['Amount']) {
             $arr[$i]->amount -= 1;
             if ($arr[$i]->amount == 0) {
@@ -95,7 +100,7 @@ function check($object, $arr)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/booststrap.css">
     <link rel="stylesheet" href="../css/style.css">
-    <title>Document</title>
+    <title>Market online</title>
 </head>
 
 <body>
@@ -116,8 +121,8 @@ function check($object, $arr)
                 <tr>
                     <th scope="row"></th>
                     <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>Total: </td>
+                    <td><?php echo $totalAmount; ?></td>
                     <td><?php echo $total; ?></td>
                 </tr>
 

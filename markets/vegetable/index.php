@@ -5,10 +5,10 @@ include('../class/vegetable.php');
 include('../connection.php');
 
 if (!isset($_SESSION['listVegeId'])) {
-    $_SESSION['listVegeId']=[];
+    $_SESSION['listVegeId'] = [];
 }
 
-$vege = new Vegetable();
+$vege = new Vegetable($conn);
 
 $html = '';
 
@@ -17,9 +17,10 @@ $ListVegetable = null;
 if (isset($_GET['cateId'])) {
     $listCateID = $_GET['cateId'];
     $tmp =   implode(",", $listCateID);
-    $ListVegetable = $vege->getListByCateIDs($conn, $tmp);
+  
+    $ListVegetable = $vege->getListByCateIDs($tmp);
 } else {
-    $ListVegetable = $vege->getAll($conn);
+    $ListVegetable = $vege->getAll();
 }
 
 foreach ($ListVegetable as $item) {
@@ -49,11 +50,11 @@ function findAmountById($id)
 }
 
 include('../class/category.php');
-$cate = new Category();
-$listCategoryName = $cate->getAll($conn);
+$cate = new Category($conn);
+$listCategoryName = $cate->getAll();
 $htmlCheckBox = '';
 foreach ($listCategoryName as $item) {
-    $htmlCheckBox .= '<li> <input type="checkbox" name="cateId[]" id="" value="' . $item['CategoryID'] . '">' . $item['Name'] . '</li>';
+    $htmlCheckBox .= '<li> <input type="checkbox" name="cateId[]" class="inputFilter" id="" value="' . $item['CategoryID'] . '">' . $item['Name'] . '</li>';
 }
 
 
@@ -70,7 +71,7 @@ foreach ($listCategoryName as $item) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Market online</title>
     <link rel="stylesheet" href="../css/booststrap.css">
     <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -120,7 +121,16 @@ foreach ($listCategoryName as $item) {
                 if (amount == amountCart) {
                     alert('Out of stock');
                 } else {
-                    window.location.href = `../cart/index.php?vegeId=${vegeId}`;
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '../cart/index.php';
+                    const hiddenField = document.createElement('input');
+                    hiddenField.type = 'hidden';
+                    hiddenField.name = 'vegeId';
+                    hiddenField.value = vegeId;
+                    form.appendChild(hiddenField);
+                    document.body.appendChild(form);
+                    form.submit();
                 }
             }
         })
