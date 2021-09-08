@@ -1,5 +1,4 @@
 <?php
-
 $headerRight = '';
 $history = '';
 if (isset($_SESSION['fullname'])) {
@@ -13,9 +12,7 @@ if (isset($_SESSION['fullname'])) {
 } else {
     $headerRight = '<a href="/markets/customer/login.php" class="linkLogout">Login/Register</a>';
 }
-
 ?>
-
 <div class="header bg-dark ">
     <nav class="navbar container navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="/markets/index.php">Market online</a>
@@ -33,8 +30,6 @@ if (isset($_SESSION['fullname'])) {
                     <a class="nav-link" href="/markets/cart/index.php">Cart</a>
                 </li>
                 <?php echo $history; ?>
-
-
             </ul>
             <div class="form-inline my-2 my-lg-0">
                 <?php echo $headerRight; ?>

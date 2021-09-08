@@ -9,9 +9,6 @@ class Vegetable
     public $images;
     public $price;
     public $conn;
-
-
-    //METHOD
     public function __construct($conn)
     {
         $this->conn = $conn;
@@ -55,8 +52,21 @@ class Vegetable
     }
     function minusAmount($vegetableID, $amount)
     {
-        $sql = "UPDATE `vegetable` SET `Amount`=(SELECT amount from vegetable where vegetable.VegetableID = $vegetableID)-$amount 
+        $sql = "UPDATE `vegetable` SET `Amount`=
+        (SELECT amount from vegetable where vegetable.VegetableID = $vegetableID)-$amount 
         WHERE vegetable.VegetableID = $vegetableID";
         $old = mysqli_query($this->conn, $sql);
+    }
+    function add($vege)
+    {
+        try {
+            $sql = "INSERT INTO `vegetable`(CategoryID, VegetableName, Unit, Amount, Image, Price)
+         VALUES 
+         ('$vege->cateid','$vege->name','$vege->unit','$vege->amount','$vege->image','$vege->price')";
+            $old = mysqli_query($this->conn, $sql);
+            return true;
+        } catch (Error $err) {
+            return false;
+        }
     }
 }

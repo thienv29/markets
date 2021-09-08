@@ -7,30 +7,36 @@ class Category
 
   public $conn;
 
-
   //METHOD
-  public function __construct($conn) {
-      $this->conn = $conn;
+  public function __construct($conn)
+  {
+    $this->conn = $conn;
   }
 
-
-
-  // Methods
-  
   function getAll()
   {
-    $sql = "SELECT * FROM category";
-    $old = mysqli_query($this->conn, $sql);
-    $val = [];
-    while ($row = mysqli_fetch_array($old)) {
-      array_push($val, $row);
+    try {
+      $sql = "SELECT * FROM category";
+      $old = mysqli_query($this->conn, $sql);
+      $val = [];
+      while ($row = mysqli_fetch_array($old)) {
+        array_push($val, $row);
+      }
+      return $val;
+    } catch (Error $er) {
+      return false;
     }
-    return $val;
   }
+
   function add($cate)
   {
-    $sql = "INSERT INTO `category` (  `Name`, `Description`)
+    try {
+      $sql = "INSERT INTO `category` (  `Name`, `Description`)
               VALUES ('$cate->name','$cate->description')";
-    $old = mysqli_query($this->conn, $sql);
+      $old = mysqli_query($this->conn, $sql);
+      return true;
+    } catch (Error $er) {
+      return false;
+    }
   }
 }

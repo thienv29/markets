@@ -13,25 +13,14 @@ if (isset($_POST['name'])) {
     $vege->price  = $_POST['price'];
     $vege->cateid  = $_POST['cateid'];
 
-    $target_dir = "../images/";
-    $target_file = $target_dir . basename($_FILES["images"]["name"]);  // dán link file tới thư mục images
+    $target_file = "../images/" . basename($_FILES["images"]["name"]);  // dán link file tới thư mục images
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
     
     $check = getimagesize($_FILES["images"]["tmp_name"]);
-    if ($_FILES["images"]["size"] > 2097152) {
+    if ($_FILES["images"]["size"] > 2097152||$check == false) {
         header('location:./new.php?err=-1');
-    }
-
-    if ($check == false) {
-        header('location:./new.php?err=-1');
-    }
-
-    if (move_uploaded_file($_FILES["images"]["tmp_name"], $target_file)) {
-        $sql = "INSERT INTO `vegetable`(CategoryID, VegetableName, Unit, Amount, Image, Price)
-         VALUES 
-         ('$vege->cateid','$vege->name','$vege->unit','$vege->amount','$vege->image','$vege->price')";
-        $old = mysqli_query($conn, $sql);
-        
+    
+    }else if (move_uploaded_file($_FILES["images"]["tmp_name"], $target_file) && $vege->add($vege)) {        
         header('location:./new.php?err=0');
     } else {
         header('location:./new.php?err=-1');

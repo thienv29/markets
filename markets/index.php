@@ -3,10 +3,6 @@ require_once('./connection.php');
 include('./class/vegetable.php');
 session_start();
 
-
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

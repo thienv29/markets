@@ -17,10 +17,6 @@ foreach ($listOrder as $key=>$item){
     <td><a class="btn btn-info" href="./detail.php?id='.$item['OrderID'].'">Detail</a></td>
     </tr>';
 }
-
-
-
-
 ?>
 
 <!DOCTYPE html>

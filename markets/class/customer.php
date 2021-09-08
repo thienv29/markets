@@ -7,13 +7,9 @@ class Customer {
   public $address;
   public $city;
   public $conn;
-
-
   public function __construct($conn) {
       $this->conn = $conn;
   }
-
-
   // Methods
   function getByID($cusid){
       $sql = "SELECT * FROM `customers` WHERE CustomerID =$cusid";

@@ -5,7 +5,7 @@
     $invalidPass = '';
     if (isset($_SESSION['fullname'])) {
         header('location:../index.php');
-    }
+    }else
     if (isset($_POST['yourId'])) {
         $id = $_POST['yourId'];
         $pass = $_POST['password'];
@@ -19,12 +19,10 @@
             $_SESSION['city'] = $row['City'];
             header('location:../vegetable/index.php');
            }else{
-            $invalidPass = 'Mật khẩu hoặc id sai';
+            $invalidPass = 'Nhập sai passowrd';
            }
         }else{
             $invalidPass = 'Không tìm thấy tài khoản';
         }
-
-        
     }
 ?>

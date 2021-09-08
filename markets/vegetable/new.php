@@ -46,7 +46,7 @@ foreach ($cateName as $key => $item) {
                 <div class="col-md-8">
                     <div class="form-group ">
                         <label for="inputEmail4">Vegetable Name</label>
-                        <input type="text" class="form-control" name="name" id="" placeholder="">
+                        <input required type="text" class="form-control" name="name" id="" placeholder="">
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -60,12 +60,12 @@ foreach ($cateName as $key => $item) {
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputPassword4">Amount</label>
-                            <input type="" class="form-control" name="amount" id="" placeholder="">
+                            <input required type="" class="form-control" name="amount" id="" placeholder="" >
                         </div>
                     </div>
                     <div class="input-group mb-3" style="flex-direction:column">
                         <label for="">Images</label>
-                        <input type="file" name="images" class="form-control" accept="image/png, image/jpg" style="width:100%" aria-describedby="basic-addon1" required>
+                        <input  type="file" name="images" class="form-control" accept="image/png, image/jpg" style="width:100%" aria-describedby="basic-addon1" required>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -77,13 +77,12 @@ foreach ($cateName as $key => $item) {
                     </div>
                     <div class="form-group">    
                         <label for="inputAddress2">Price</label>
-                        <input type="text" class="form-control" name="price" id="inputAddress2" placeholder="">
+                        <input required type="text" class="form-control" name="price" id="inputAddress2" placeholder="">
                     </div>
                 </div>
             </div>
             <button type="submit" class="btn btn-info" style="margin-left: 14px;">Add</button>
         </div>
-
     </form>
     <script>
         <?php echo $scriptAlert;?>

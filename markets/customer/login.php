@@ -1,10 +1,8 @@
 <?php
     include('./checklogin.php');
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,8 +13,6 @@
 </head>
 
 <body>
-
-    
     <div class="login">
         <form class=" p-4" action="login.php" method="POST">
             <h3>Login</h3>
@@ -34,7 +30,5 @@
             <a href="register.php" class="btn login-btn btn-primary">Register</a>
         </form>
     </div>
-
 </body>
-
 </html>

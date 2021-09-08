@@ -1,5 +1,13 @@
 <?php
     include('./add.php');
+    $scriptAlert='';
+    if (isset($_GET['addStatus'])) {
+        if ($_GET['addStatus']==1) {
+           $scriptAlert = "alert('Thêm thành công')";
+        }else {
+            $scriptAlert= "alert('Thêm thất bại')";
+        }
+    }
 
     $cate = new Category($conn);
     $html = '';
@@ -66,7 +74,9 @@
             </div>
         </div>
     </div>
-
+    <script>
+        <?php echo $scriptAlert; ?>
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>

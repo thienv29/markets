@@ -5,58 +5,66 @@ session_start();
 $html = '';
 $total = 0;
 $totalAmount = 0;
-$scriptAlert='';
+$scriptAlert = '';
 if (isset($_GET['billStatus'])) {
     $billStatus = $_GET['billStatus'];
-    if ($billStatus==1) {
-        $scriptAlert=' alert("Thanh toán thành công")';
-    }else {
-        $scriptAlert=' alert("Thanh toán thất bại")';
-        
+    if ($billStatus == 1) {
+        $scriptAlert = ' alert("Thanh toán thành công")';
+    } else {
+        $scriptAlert = ' alert("Thanh toán thất bại")';
     }
 }
 if (isset($_GET['errLogin'])) {
-    $scriptAlert=' alert("Vui lòng đăng nhập")';
-}
-
-// if (!isset($_SESSION['fullname'])) {
-//     $html = 'You need to login!!';
-// } else {
-    $vegetable = new Vegetable($conn);
-    if (isset($_POST['vegeId'])) {
-
-        $object = new stdClass();
-        $object->amount = 1;
-        $object->id = $_POST['vegeId'];
-
-        if (check($object, $_SESSION['listVegeId'])) {
-        } else {
-            array_push($_SESSION['listVegeId'], $object);
-        }
+    if ($_GET['errLogin'] == 1) {
+        $scriptAlert = ' alert("Vui lòng đăng nhập")';
     }
-    $_SESSION['listVegeId']  = checkAmount($vegetable);
+}
+$vegetable = new Vegetable($conn);
+if (isset($_POST['vegeId'])) {
 
-    $html = '';
+    $object = new stdClass();
+    $object->amount = 1;
+    $object->id = $_POST['vegeId'];
+
+    if (check($object, $_SESSION['listVegeId'])) {
+    } else {
+        array_push($_SESSION['listVegeId'], $object);
+    }
+}
+$_SESSION['listVegeId']  = checkAmount($vegetable);
+$html = '';
+if ($_SESSION['listVegeId']==[]) {
+    $html='
+    <tr>
+    <td></td>
+    <td></td>
+    <td><img src="../images/noProduct.png" alt="" ></td>
+    <td></td>
+    <td></td>
+    </tr>
+    ';
+}else{
 
     foreach ($_SESSION['listVegeId'] as $key => $item) {
         $vegetableItem = $vegetable->getByID($item->id);
-
+    
         $name = $vegetableItem['VegetableName'];
         $image = $vegetableItem['Image'];
         $price = $vegetableItem['Price'];
         $amount = $item->amount;
-
+    
         $total += $price * $amount;
-        $totalAmount+=$amount;
-
+        $totalAmount += $amount;
+    
         $html .= '<tr>
-            <th scope="row">' . $key+1 . '</th>
-            <td>' . $name . '</td>
-            <td><img src="../' . $image . '" alt="" style="width: 100px; height:100px;"></td>
-            <td>' . $amount . '</td>
-            <td>' . $price . '</td>
-        </tr>';
+                <th scope="row">' . $key + 1 . '</th>
+                <td>' . $name . '</td>
+                <td><img src="../' . $image . '" alt="" style="width: 100px; height:100px;"></td>
+                <td>' . $amount . '</td>
+                <td>' . $price . '</td>
+            </tr>';
     }
+}
 // }
 function checkAmount($vegetable)
 {
@@ -147,18 +155,18 @@ function check($object, $arr)
                     <div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Total</label>
-                            <input type="text" class="form-control " name="total" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $total; ?>"  readonly>
+                            <input type="text" class="form-control " name="total" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $total; ?>" readonly>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Note</label>
                             <input type="text" class="form-control" name="note" id="exampleInputPassword1" placeholder="Your note">
                         </div>
-                        
+
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit"  class="btn btn-danger">Order</button>
+                    <button type="submit" class="btn btn-danger">Order</button>
                 </div>
             </form>
         </div>

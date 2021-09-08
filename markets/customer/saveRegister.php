@@ -8,7 +8,6 @@ if (isset($_SESSION['fullname'])) {
 if (isset($_POST['name'])) {
     
     $cus = new Customer($conn);
-
     $cus->fullname = $_POST['name'];
     $cus->pass = $_POST['password'];
     $cus->address = $_POST['address'];

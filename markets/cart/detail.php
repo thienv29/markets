@@ -1,16 +1,15 @@
 <?php
-    session_start();
-    include('../class/vegetable.php');
-    include('../class/order.php');
-    include('../connection.php');
+session_start();
+include('../class/vegetable.php');
+include('../class/order.php');
+include('../connection.php');
 
-    $totalPrice = 0;
-    $totalAmount = 0;
+$totalPrice = 0;
+$totalAmount = 0;
 
-    if (!isset($_SESSION['fullname'])) {
-        header('location:../customer/login.php');
-    }
-
+if (!isset($_SESSION['fullname'])) {
+    header('location:../customer/login.php');
+} else {
     $html = '';
 
     if (isset($_GET['id'])) {
@@ -21,7 +20,7 @@
 
         foreach ($listOrderDetail as $key => $item) {
             $vegetable = new Vegetable($conn);
-            $vegetableItem  = $vegetable->getByID( $item['VegetableID']);
+            $vegetableItem  = $vegetable->getByID($item['VegetableID']);
 
             $html .= '
                 <tr>
@@ -31,11 +30,13 @@
                     <td>' . $item['Quantity'] . '</td>
                     <td>' . $vegetableItem['Price'] . '</td>
                 </tr>';
-                
+
             $totalPrice += $item['Quantity'] * $vegetableItem['Price'];
             $totalAmount += $item['Quantity'];
         }
     }
+}
+
 
 
 
