@@ -4,14 +4,16 @@ require_once('../connection.php');
 include('../class/category.php');
 
 $scriptAlert = '';
+if (!isset($_SESSION['fullname'])) {
+    header('location:./index.php');
+}
 
 if (isset($_GET['err'])) {
     $err = $_GET['err'];
-    
-    if ($err ==-1) {
-        $scriptAlert='alert("Vui lòng nhập đúng định dạng!!")';
-    }else if($err==0) {
-        $scriptAlert='alert("Thêm thành công")';
+    if ($err == -1) {
+        $scriptAlert = 'alert("Vui lòng nhập đúng định dạng!!")';
+    } else if ($err == 0) {
+        $scriptAlert = 'alert("Thêm thành công")';
     }
 }
 
@@ -20,7 +22,7 @@ $cateName = [];
 $cateName = $cate->getAll();
 $html = '';
 foreach ($cateName as $key => $item) {
-    $html .= '<option value="'.$item['CategoryID'].'">' . $item['Name'] . '</option>';
+    $html .= '<option value="' . $item['CategoryID'] . '">' . $item['Name'] . '</option>';
 }
 ?>
 <!DOCTYPE html>
@@ -60,12 +62,12 @@ foreach ($cateName as $key => $item) {
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputPassword4">Amount</label>
-                            <input required type="" class="form-control" name="amount" id="" placeholder="" >
+                            <input required type="" class="form-control" name="amount" id="" placeholder="">
                         </div>
                     </div>
                     <div class="input-group mb-3" style="flex-direction:column">
                         <label for="">Images</label>
-                        <input  type="file" name="images" class="form-control" accept="image/png, image/jpg" style="width:100%" aria-describedby="basic-addon1" required>
+                        <input type="file" name="images" class="form-control" accept="image/png, image/jpg" style="width:100%" aria-describedby="basic-addon1" required>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -75,7 +77,7 @@ foreach ($cateName as $key => $item) {
                             <?php echo $html; ?>
                         </select>
                     </div>
-                    <div class="form-group">    
+                    <div class="form-group">
                         <label for="inputAddress2">Price</label>
                         <input required type="text" class="form-control" name="price" id="inputAddress2" placeholder="">
                     </div>
@@ -85,7 +87,7 @@ foreach ($cateName as $key => $item) {
         </div>
     </form>
     <script>
-        <?php echo $scriptAlert;?>
+        <?php echo $scriptAlert; ?>
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>

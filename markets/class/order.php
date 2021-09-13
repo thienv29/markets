@@ -46,6 +46,7 @@ class Order
             $sqlGet = "SELECT * FROM `order`  ORDER BY OrderID DESC LIMIT 1";
             $old  = mysqli_query($this->conn, $sqlGet);
             $row = $old->fetch_assoc();
+
             $lastID = $row['OrderID'] + 1;
 
             $sqlInsertOrder = "INSERT INTO `order`(`OrderID`, `CustomerID`, `Date`, `Total`, `Note`) 
@@ -59,7 +60,7 @@ class Order
                 mysqli_query($this->conn, $sqlInsertDetail);
                 $vegetable->minusAmount($item->vegeID,$item->quantity);
                 
-            }
+            }   
             return true;
         } catch (Error) {
             return false;

@@ -3,6 +3,7 @@ include('./saveRegister.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,6 +12,7 @@ include('./saveRegister.php');
   <link rel="stylesheet" href="../css/style.css">
   <title>Market online</title>
 </head>
+
 <body>
   <div class="register">
     <form class=" p-4" action="register.php" method="POST">
@@ -21,7 +23,7 @@ include('./saveRegister.php');
       </div>
       <div class="form-group">
         <label for="exampleDropdownFormEmail2">Password</label>
-        <input type="text" name="password" class="form-control" id="exampleDropdownFormEmail2" placeholder="Enter Your's password" required>
+        <input type="password" name="password" class="form-control" id="exampleDropdownFormEmail2" placeholder="Enter Your's password" required>
       </div>
       <div class="form-group">
         <label for="exampleDropdownFormEmail2">Address</label>
@@ -38,4 +40,5 @@ include('./saveRegister.php');
     </div>
   </div>
 </body>
+
 </html>

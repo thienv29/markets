@@ -1,11 +1,15 @@
 <?php
+session_start();
+if (!isset($_SESSION['fullname'])) {
+    header('location:../vegetable/index.php');
+} else {
     include('./add.php');
-    $scriptAlert='';
+    $scriptAlert = '';
     if (isset($_GET['addStatus'])) {
-        if ($_GET['addStatus']==1) {
-           $scriptAlert = "alert('Thêm thành công')";
-        }else {
-            $scriptAlert= "alert('Thêm thất bại')";
+        if ($_GET['addStatus'] == 1) {
+            $scriptAlert = "alert('Thêm thành công')";
+        } else {
+            $scriptAlert = "alert('Thêm thất bại')";
         }
     }
 
@@ -14,13 +18,15 @@
     $listCate = null;
     $listCate = $cate->getAll();
 
-    foreach($listCate as $item){
+    foreach ($listCate as $item) {
         $html .= '<tr>
-                    <td scope="col">'.$item['CategoryID'].'</td>
-                    <td scope="col">'.$item['Name'].'</td>
-                    <td scope="col">'.$item['Description'].'</td>
+                    <td scope="col">' . $item['CategoryID'] . '</td>
+                    <td scope="col">' . $item['Name'] . '</td>
+                    <td scope="col">' . $item['Description'] . '</td>
                 </tr>';
     }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -43,13 +49,11 @@
                 <form class=" p-4" action="add.php" method="POST">
                     <div class="form-group">
                         <label for="exampleDropdownFormEmail2">Name:</label>
-                        <input type="text" name="name" class="form-control" id="exampleDropdownFormEmail2"
-                            placeholder="">
+                        <input type="text" name="name" class="form-control" id="exampleDropdownFormEmail2" placeholder="">
                     </div>
                     <div class="form-group">
                         <label for="exampleDropdownFormPassword2">Description:</label>
-                        <input type="text" name="description" class="form-control" id="exampleDropdownFormPassword2"
-                            placeholder="">
+                        <input type="text" name="description" class="form-control" id="exampleDropdownFormPassword2" placeholder="">
                     </div>
 
                     <button type="submit" class="btn  btn-info">Add</button>
@@ -67,7 +71,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php echo $html;?>
+                            <?php echo $html; ?>
                         </tbody>
                     </table>
                 </div>
@@ -77,11 +81,9 @@
     <script>
         <?php echo $scriptAlert; ?>
     </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
     </script>
 </body>
 

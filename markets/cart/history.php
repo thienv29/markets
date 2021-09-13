@@ -4,19 +4,21 @@ include('../class/order.php');
 include('../connection.php');
 if (!isset($_SESSION['fullname'])) {
     header('location:../customer/login.php');
-}
-$html='';
-$order = new Order($conn);
-$listOrder=[];
-$listOrder = $order->getAllOrder($_SESSION['id']);
-foreach ($listOrder as $key=>$item){
-    $html.=' <tr>
-    <th scope="row">' . $key+1 . '</th>
+} else {
+    $html = '';
+    $order = new Order($conn);
+    $listOrder = [];
+    $listOrder = $order->getAllOrder($_SESSION['id']);
+    foreach ($listOrder as $key => $item) {
+        $html .= ' <tr>
+    <th scope="row">' . $key + 1 . '</th>
     <td>' . $item['Date'] . '</td>
-    <td> '.$item['Total'].'</td>
-    <td><a class="btn btn-info" href="./detail.php?id='.$item['OrderID'].'">Detail</a></td>
+    <td> ' . $item['Total'] . '</td>
+    <td><a class="btn btn-info" href="./detail.php?id=' . $item['OrderID'] . '">Detail</a></td>
     </tr>';
+    }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -34,23 +36,23 @@ foreach ($listOrder as $key=>$item){
 <body>
     <?php include('../menu.php') ?>
     <div class="container mt-3">
-    <h1>History</h1>
+        <h1>History</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Date</th>
-                <th scope="col">Total</th>
-                <th scope="col">Detail</th>
-            </tr>
-        </thead>
-        <tbody>
-           
-            <?php echo $html;?>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Detail</th>
+                </tr>
+            </thead>
+            <tbody>
 
-        </tbody>
-    </table>
+                <?php echo $html; ?>
+
+            </tbody>
+        </table>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">

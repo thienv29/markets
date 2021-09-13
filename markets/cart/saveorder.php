@@ -29,12 +29,11 @@ if (!isset($_SESSION['fullname'])) {
         $orderDetail->vegeID = $id;
         $orderDetail->quantity = $amount;
         $orderDetail->price = $price;
-
+        
         array_push($listDetails, $orderDetail);
     }
     if ($order->addOrder($order, $listDetails)) {
         $_SESSION['listVegeId'] = [];
-
         header('location:./index.php?billStatus=1');
     } else {
         header('location:./index.php?billStatus=0');

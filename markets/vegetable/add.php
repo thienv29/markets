@@ -15,14 +15,20 @@ if (isset($_POST['name'])) {
 
     $target_file = "../images/" . basename($_FILES["images"]["name"]);  // dán link file tới thư mục images
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-    
-    $check = getimagesize($_FILES["images"]["tmp_name"]);
-    if ($_FILES["images"]["size"] > 2097152||$check == false) {
+    $format = array('jpg', 'png');
+    if (!in_array($imageFileType, $format)) {
         header('location:./new.php?err=-1');
-    
-    }else if (move_uploaded_file($_FILES["images"]["tmp_name"], $target_file) && $vege->add($vege)) {        
-        header('location:./new.php?err=0');
     } else {
-        header('location:./new.php?err=-1');
+        $check = getimagesize($_FILES["images"]["tmp_name"]);
+
+        if ($_FILES["images"]["size"] > 2*1024*1024 || $check == false) {
+            header('location:./new.php?err=-1');
+        } else if (move_uploaded_file($_FILES["images"]["tmp_name"], $target_file) && $vege->add($vege)) {
+            header('location:./new.php?err=0');
+        } else {
+            header('location:./new.php?err=-1');
+        }
     }
+}else{
+    header('location:./index.php');
 }

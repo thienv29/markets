@@ -73,7 +73,7 @@ foreach ($listCategoryName as $item) {
                     <ul style="list-style: none;  padding:0;">
                         <?php echo $htmlCheckBox; ?>
                     </ul>
-                    <button type="  submit" class="btn btn-info my-2 my-sm-0">Filter</button>
+                    <button type="submit" class="btn btn-info my-2 my-sm-0">Filter</button>
                 </form>
             </div>
             <div class=" col-md-10 mt-4">
@@ -92,8 +92,6 @@ foreach ($listCategoryName as $item) {
         function formatNumber(num) { // định dạng giá tiền
             return Number(num).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
         }
-
-
         const listCard = Array.from(document.querySelectorAll('.card'))
         listCard.forEach(function(e) {
             const btn = e.querySelector('.buyCard')
@@ -107,6 +105,7 @@ foreach ($listCategoryName as $item) {
                     const form = document.createElement('form');
                     form.method = 'POST';
                     form.action = '../cart/index.php';
+                    
                     const hiddenField = document.createElement('input');
                     hiddenField.type = 'hidden';
                     hiddenField.name = 'vegeId';
@@ -114,6 +113,7 @@ foreach ($listCategoryName as $item) {
                     form.appendChild(hiddenField);
                     document.body.appendChild(form);
                     form.submit();
+                    
                 }
             }
         })

@@ -22,8 +22,13 @@ class Customer {
   }
   function add($cus){
       $sql = "INSERT INTO `customers`( `Password`, `Fullname`, `Address`, `City`)
-       VALUES ('$cus->pass','$cus->fullname','$cus->address','$cus->city')";
+        VALUES ('$cus->pass','$cus->fullname','$cus->address','$cus->city')";
         $old = mysqli_query($this->conn,$sql);
+        $sqlGet = "SELECT * FROM `customers` ORDER BY CustomerID DESC LIMIT 1;";
+        $old2  = mysqli_query($this->conn, $sqlGet);
+        $row = $old2->fetch_assoc();
+        return $row['CustomerID'];
+        
   }
 }
 ?>

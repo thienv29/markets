@@ -1,5 +1,10 @@
 <?php
     include('./checklogin.php');
+    $script = "";
+    if (isset($_GET['newid'])) {
+        $id =$_GET['newid'];
+        $script = 'alert("your id: '.$id.' ")';
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,5 +35,8 @@
             <a href="register.php" class="btn login-btn btn-primary">Register</a>
         </form>
     </div>
+    <script>
+        <?php echo $script; ?>
+    </script>
 </body>
 </html>

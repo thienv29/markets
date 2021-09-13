@@ -95,6 +95,10 @@ function check($object, $arr)
         }
     }
 }
+$disable="";
+if ($_SESSION['listVegeId']==[]) {
+    $disable = "disabled";
+}
 
 
 
@@ -136,7 +140,7 @@ function check($object, $arr)
 
             </tbody>
         </table>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal">
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal" <?php echo $disable;?> >
             Order
         </button>
 
@@ -166,7 +170,7 @@ function check($object, $arr)
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger">Order</button>
+                    <button type="submit" class="btn btn-danger" >Order</button>
                 </div>
             </form>
         </div>

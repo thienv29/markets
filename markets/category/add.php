@@ -1,7 +1,7 @@
 <?php
 require_once('../connection.php');
 include('../class/category.php');
-session_start();
+
 
 if (isset($_POST['name'])) {
     $cate = new Category($conn);
